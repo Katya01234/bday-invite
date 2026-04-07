@@ -1,14 +1,12 @@
 /* src/pages/InvitePage.css */
-
 .invite-container {
-  height: 100vh;
-  width: 100vw;
-  background-color: #FFFDF9;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-  perspective: 2000px;
+  min-height: 100vh;
+  gap: 40px; /* Расстояние между билетом и таймером */
+  padding: 20px 0;
 }
 
 .ticket-cinema {
@@ -292,11 +290,22 @@
 
   /* Перемещаем вырезы, чтобы они были по бокам стыка */
   .ticket-stub::before, .ticket-stub::after {
-    top: -13px;
-    left: auto;
+    top: -13px; /* Центрируем по линии стыка */
+    bottom: auto;
   }
-  .ticket-stub::before { left: -13px; border-bottom: none; border-right: 2px solid #D4AF37; }
-  .ticket-stub::after { right: -13px; border-top: none; border-left: 2px solid #D4AF37; }
+
+  .ticket-stub::before { 
+    left: -13px; 
+    border-bottom: none; 
+    border-right: 2px solid #D4AF37; 
+  }
+  
+  .ticket-stub::after { 
+    right: -13px; 
+    left: auto; /* Сбрасываем left: -13px от десктопа */
+    border-top: none; 
+    border-left: 2px solid #D4AF37; 
+  }
 
   /* Возвращаем штрихкод в нормальное положение (не повернутое) */
   .barcode-container {
@@ -317,4 +326,106 @@
     grid-template-columns: 1fr; /* Детали выстраиваются в одну колонку */
     gap: 10px;
   }
+}
+
+.loc-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Центрируем кнопки внутри билета */
+  width: 100%;
+}
+
+.loc-btn {
+  margin: 0 auto; /* Чтобы кнопки были по центру */
+}
+
+.loc-details {
+  overflow: hidden; /* Чтобы анимация появления была плавной */
+  width: 90%;
+  margin: 6px auto 0 auto;
+}
+
+.wishlist-wrapper {
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 1px dashed #D4AF37; /* Аккуратная линия отрыва */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.wishlist-link-btn {
+  background-color: transparent;
+  border: 1px solid #D4AF37;
+  color: #1a1a1a;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.wishlist-link-btn:hover {
+  background-color: #E0218A;
+  color: white;
+  border-color: #E0218A;
+  box-shadow: 0 5px 15px rgba(224, 33, 138, 0.2);
+}
+.page-bottom-timer {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 15px 30px;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(212, 175, 87, 0.2);
+}
+
+.timer-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  font-style: italic;
+  color: #888;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.countdown-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.count-num {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a2a44;
+  min-width: 45px; /* Чтобы цифры не дергались */
+  text-align: center;
+}
+
+.count-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  color: #D4AF37;
+  letter-spacing: 1px;
+}
+
+.countdown-sep {
+  font-size: 1.5rem;
+  color: #D4AF37;
+  font-weight: 300;
+  padding-bottom: 18px;
 }

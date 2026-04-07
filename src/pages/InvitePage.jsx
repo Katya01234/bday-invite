@@ -4,8 +4,31 @@ import confetti from 'canvas-confetti';
 import './InvitePage.css';
 
 const InvitePage = () => {
-  const guestName = localStorage.getItem('guestName') || 'Гость';
+  const guestName = localStorage.getItem('guestName') || 'Артемка';
   const [activeLoc, setActiveLoc] = useState(null);
+  const wishlistLink = "https://t.me/wishlistbestbot?start=2131755328";
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0});
+  useEffect(() => {
+  const targetDate = new Date('2026-04-22T16:00:00'); // Твой день рождения
+
+  const timer = setInterval(() => {
+    const now = new Date();
+    const difference = targetDate - now;
+
+    if (difference > 0) {
+      setTimeLeft({
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60)
+      });
+    } else {
+      clearInterval(timer);
+    }
+  }, 1000);
+
+  return () => clearInterval(timer);
+}, []);
 
   useEffect(() => {
     const duration = 4 * 1000;
@@ -14,22 +37,18 @@ const InvitePage = () => {
     const frame = () => {
       confetti({
         particleCount: 2,
-        angle: 60,
-        spread: 55,
+        angle: 60, spread: 55,
         origin: { x: 0, y: 0.6 },
         colors: ['#E0218A', '#D4AF37', '#FFC0CB']
       });
       confetti({
         particleCount: 2,
-        angle: 120,
-        spread: 55,
+        angle: 120, spread: 55,
         origin: { x: 1, y: 0.6 },
         colors: ['#E0218A', '#D4AF37', '#FFC0CB']
       });
 
-      if (Date.now() < end) {
-        requestAnimationFrame(frame);
-      }
+      if (Date.now() < end) requestAnimationFrame(frame);
     };
     frame();
   }, []);
@@ -39,13 +58,13 @@ const InvitePage = () => {
       id: 'capital',
       name: 'Capital Club',
       address: 'проспект Гагарина, 27',
-      link: 'https://yandex.com/maps/org/capital_club/1037304856/?ll=43.980508%2C56.293927&z=14' 
+      link: 'https://yandex.com/maps/org/capital_club/1037304856' 
     },
     {
       id: 'herring',
       name: 'Селедка и кофе',
       address: 'ул. Рождественская, 19',
-      link: 'https://yandex.com/maps/org/seledka_i_kofe/31961728574/?ll=43.994147%2C56.329832&z=17'
+      link: 'https://yandex.com/maps/org/seledka_i_kofe/31961728574'
     }
   ];
 
@@ -58,6 +77,7 @@ const InvitePage = () => {
         className="ticket-cinema"
       >
         <div className="ticket-body">
+          {/* Левая часть */}
           <div className="ticket-main-info">
             <h2 className="ticket-header">ADMIT ONE  //  ВХОД ПО ПРИГЛАШЕНИЮ</h2>
             <div className="divider"></div>
@@ -81,7 +101,6 @@ const InvitePage = () => {
               
               <div className="detail-item location-block">
                 <span>LOCATION / ЛОКАЦИИ</span>
-                {/* Подсказка о боулинге */}
                 <p className="location-hint">Начинаем встречу в боулинге (Capital Club)</p>
                 
                 <div className="loc-icons">
@@ -117,11 +136,24 @@ const InvitePage = () => {
 
               <div className="detail-item">
                 <span>DRESS CODE</span>
-                <strong className="pink-text">Barbie & Old Money</strong>
+                <strong className="pink-text">Old Money</strong>
               </div>
             </div>
+          <div className="wishlist-wrapper">
+            <motion.a 
+              href={wishlistLink}
+              target="_blank" 
+              rel="noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="wishlist-link-btn"
+            >
+              🎁 WISHLIST / МОЙ ВИШЛИСТ
+            </motion.a>
+          </div>
           </div>
 
+          {/* Правая часть (Корешок) */}
           <div className="ticket-stub">
             <div className="perforation"></div>
             <div className="barcode-container">
@@ -135,6 +167,30 @@ const InvitePage = () => {
           </div>
         </div>
       </motion.div>
+      <div className="page-bottom-timer">
+        <p className="timer-label">До начала праздника осталось:</p>
+        <div className="countdown-container">
+          <div className="countdown-item">
+            <span className="count-num">{timeLeft.days}</span>
+            <span className="count-label">дней</span>
+          </div>
+          <div className="countdown-sep">:</div>
+          <div className="countdown-item">
+            <span className="count-num">{timeLeft.hours.toString().padStart(2, '0')}</span>
+            <span className="count-label">часов</span>
+          </div>
+          <div className="countdown-sep">:</div>
+          <div className="countdown-item">
+            <span className="count-num">{timeLeft.minutes.toString().padStart(2, '0')}</span>
+            <span className="count-label">мин</span>
+          </div>
+          <div className="countdown-sep">:</div>
+          <div className="countdown-item">
+            <span className="count-num">{timeLeft.seconds.toString().padStart(2, '0')}</span>
+            <span className="count-label">сек</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

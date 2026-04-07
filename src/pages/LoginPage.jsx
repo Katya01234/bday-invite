@@ -10,16 +10,19 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    // Приводим ввод к нижнему регистру для сравнения
-    const guest = GUESTS.find(g => g.searchName === name.toLowerCase().trim());
+    const normalizedInput = name.toLowerCase().trim();
+    
+    // ОБНОВЛЕННАЯ ЛОГИКА ПОИСКА
+    const guest = GUESTS.find(g => 
+      g.searchName === normalizedInput || 
+      (g.aliases && g.aliases.includes(normalizedInput))
+    );
 
     if (guest) {
-      // Сохраняем имя гостя, чтобы показать его на билете
       localStorage.setItem('guestName', guest.displayName);
       navigate('/invite');
     } else {
       setError(true);
-      // Убираем ошибку через 2 секунды
       setTimeout(() => setError(false), 2000);
     }
   };
@@ -36,13 +39,17 @@ const LoginPage = () => {
         <p className="login-subtitle">Пожалуйста, введите ваше имя, чтобы получить приглашение</p>
         
         <input 
+          autoFocus // Курсор сразу будет в поле, когда гость откроет сайт
           type="text" 
           className={`login-input ${error ? 'error' : ''}`}
           placeholder="Your Name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => {
+          setName(e.target.value);
+          if (error) setError(false); // Сбрасываем ошибку сразу при наборе
+          }}
           onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
-        />
+          />
 
         <motion.button 
           whileHover={{ scale: 1.05 }}

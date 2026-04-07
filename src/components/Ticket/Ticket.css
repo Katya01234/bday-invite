@@ -1,0 +1,187 @@
+.ticket-container {
+  display: flex;
+  background: white;
+  width: 820px;
+  min-height: 500px;
+  border-radius: 20px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.1);
+  position: relative;
+  margin: 20px auto;
+}
+
+/* Левая часть */
+.ticket-main-part {
+  flex: 2.8;
+  padding: 15px;
+  display: flex;
+}
+
+.gold-inner-border {
+  border: 2px solid #D4AF37;
+  border-radius: 12px;
+  padding: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.ticket-top-header {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 5px;
+  color: #aaa;
+  margin-bottom: 10px;
+}
+
+.gold-separator {
+  width: 60px;
+  height: 1.5px;
+  background: #D4AF37;
+  margin-bottom: 25px;
+}
+
+.guest-display-name {
+  font-family: var(--font-serif);
+  font-size: 4.2rem;
+  color: var(--color-pink);
+  font-style: italic;
+  font-weight: 400;
+  margin: 10px 0 20px 0;
+}
+
+.invite-desc {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.event-details-row {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  border-top: 1px solid #f2f2f2;
+  padding: 20px 0;
+}
+
+.info-label {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  color: #bbb;
+  letter-spacing: 2px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.info-value {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.pink-accent { color: var(--color-pink); }
+
+.loc-pills {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.loc-pill {
+  padding: 8px 18px;
+  border: 1px solid #D4AF37;
+  background: white;
+  border-radius: 25px;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.loc-pill.active {
+  background: var(--color-pink);
+  color: white;
+  border-color: var(--color-pink);
+}
+
+/* Корешок */
+.ticket-stub-part {
+  flex: 1;
+  background: #fafafa;
+  display: flex;
+  position: relative;
+  border-radius: 0 20px 20px 0;
+}
+
+.stub-divider {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  border-left: 2px dashed #D4AF37;
+}
+
+.punch {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  background: var(--color-bg); /* Должен совпадать с фоном InvitePage */
+  border: 2px solid #D4AF37;
+  border-radius: 50%;
+  left: -18px;
+}
+.punch.top { top: -17px; }
+.punch.bottom { bottom: -17px; }
+
+.barcode-vertical-wrapper {
+  margin-left: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  transform: rotate(-90deg);
+}
+
+.barcode-stripes {
+  display: flex;
+  align-items: flex-end;
+  height: 60px;
+  gap: 2px;
+}
+
+.stripe { background: #222; height: 100%; }
+
+.barcode-label {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  margin-top: 10px;
+}
+
+/* МОБИЛКИ */
+@media (max-width: 850px) {
+  .ticket-container {
+    flex-direction: column;
+    width: 90vw;
+    height: auto;
+  }
+  .ticket-stub-part {
+    height: 180px;
+    border-radius: 0 0 20px 20px;
+  }
+  .stub-divider {
+    height: 2px;
+    width: 100%;
+    border-left: none;
+    border-top: 2px dashed #D4AF37;
+    top: 0;
+  }
+  .barcode-vertical-wrapper { transform: rotate(0deg); }
+  .punch { display: none; }
+  .guest-display-name { font-size: 3rem; }
+}

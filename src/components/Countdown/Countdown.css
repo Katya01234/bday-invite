@@ -1,0 +1,65 @@
+.bottom-timer {
+  position: absolute;
+  bottom: 40px; /* Отступ от нижнего края экрана */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 10;
+  
+  /* Немного блюра на фоне, если под таймером будет что-то проплывать */
+  padding: 10px 20px;
+  background: rgba(255, 253, 249, 0.5);
+  backdrop-filter: blur(4px);
+  border-radius: 20px;
+}
+
+.timer-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 3px;
+  color: #888; /* Приглушенный цвет для подписи */
+  text-transform: uppercase;
+}
+
+.timer-values {
+  display: flex;
+  gap: 20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem; /* Крупные красивые цифры */
+  font-weight: 700;
+  color: #E0218A;
+  font-style: italic;
+}
+
+.t-unit {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.t-unit span {
+  font-size: 0.85rem;
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  color: #b0b0b0;
+  text-transform: lowercase;
+}
+
+/* Адаптив для мобильных устройств */
+@media (max-width: 650px) {
+  .bottom-timer {
+    bottom: 20px;
+    width: 90%;
+  }
+  
+  .timer-values {
+    font-size: 1.6rem;
+    gap: 12px;
+  }
+  
+  .t-unit span {
+    font-size: 0.7rem;
+  }
+}

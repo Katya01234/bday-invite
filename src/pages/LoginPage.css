@@ -14,15 +14,15 @@
 }
 
 .login-title {
-  font-family: 'Cormorant Garamond', serif; /* Тот самый шрифт */
+  font-family: var(--font-serif); /* Вместо 'Cormorant Garamond', serif */
   font-size: 3rem;
-  color: #E0218A; /* Barbie Pink акцент */
+  color: var(--color-pink);
   margin-bottom: 10px;
   letter-spacing: 2px;
 }
 
 .login-subtitle {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.9rem;
   color: #888;
   margin-bottom: 30px;
@@ -46,6 +46,11 @@
 .login-input.error {
   border-bottom: 1px solid red;
   color: red;
+}
+
+.login-input:focus {
+  border-bottom: 2px solid #D4AF37;
+  letter-spacing: 3px; /* Эффект раздвигающихся букв при печати */
 }
 
 .login-button {
