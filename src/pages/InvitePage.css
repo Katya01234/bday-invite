@@ -247,3 +247,74 @@
   letter-spacing: 3px;
   margin-top: 10px;
 }
+
+/* АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ */
+@media (max-width: 650px) {
+  .ticket-cinema {
+    width: 95vw; /* Билет занимает почти всю ширину экрана */
+    flex-direction: column; /* Корешок теперь будет снизу, а не сбоку */
+    min-height: auto;
+  }
+
+  .ticket-body {
+    flex-direction: column; /* Основная часть и корешок встают друг под друга */
+  }
+
+  .ticket-main-info {
+    margin: 10px;
+    border-right: 2px solid #D4AF37; /* Возвращаем правую рамку */
+    border-bottom: none; /* Убираем нижнюю, чтобы она не дублировалась с корешком */
+    border-radius: 8px 8px 0 0; /* Скругляем только верхние углы */
+    padding: 20px 15px;
+  }
+
+  .ticket-stub {
+    margin: 10px;
+    margin-top: 0;
+    border-left: 2px solid #D4AF37; /* Возвращаем левую рамку */
+    border-radius: 0 0 8px 8px; /* Скругляем нижние углы */
+    height: 120px; /* Фиксированная высота для корешка снизу */
+    flex-direction: row; /* На телефоне штрихкод будет лежать горизонтально */
+  }
+
+  /* Поворачиваем перфорацию горизонтально */
+  .perforation {
+    left: 10px;
+    right: 10px;
+    top: -1px;
+    bottom: auto;
+    width: auto;
+    height: 2px;
+    background-image: linear-gradient(to right, #D4AF37 50%, rgba(255,255,255,0) 0%);
+    background-size: 12px 2px;
+    background-repeat: repeat-x;
+  }
+
+  /* Перемещаем вырезы, чтобы они были по бокам стыка */
+  .ticket-stub::before, .ticket-stub::after {
+    top: -13px;
+    left: auto;
+  }
+  .ticket-stub::before { left: -13px; border-bottom: none; border-right: 2px solid #D4AF37; }
+  .ticket-stub::after { right: -13px; border-top: none; border-left: 2px solid #D4AF37; }
+
+  /* Возвращаем штрихкод в нормальное положение (не повернутое) */
+  .barcode-container {
+    transform: rotate(0deg); 
+    margin-right: 0;
+  }
+
+  .barcode {
+    width: 180px;
+    height: 35px;
+  }
+
+  .guest-name {
+    font-size: 1.8rem; /* Уменьшаем шрифт имени для маленьких экранов */
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr; /* Детали выстраиваются в одну колонку */
+    gap: 10px;
+  }
+}
