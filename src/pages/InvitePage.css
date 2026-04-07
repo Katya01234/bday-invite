@@ -1,0 +1,249 @@
+/* src/pages/InvitePage.css */
+
+.invite-container {
+  height: 100vh;
+  width: 100vw;
+  background-color: #FFFDF9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  perspective: 2000px;
+}
+
+.ticket-cinema {
+  background: white;
+  width: 620px; 
+  min-height: 300px; /* Увеличили для комфортного размещения боулинг-инфо */
+  display: flex;
+  border-radius: 12px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.ticket-body {
+  display: flex;
+  width: 100%;
+}
+
+.ticket-main-info {
+  flex: 3;
+  padding: 25px 35px;
+  border: 2px solid #D4AF37;
+  margin: 12px;
+  margin-right: 0;
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ticket-stub {
+  flex: 1;
+  background-color: #fafafa;
+  position: relative;
+  border: 2px solid #D4AF37;
+  margin: 12px;
+  margin-left: 0;
+  border-radius: 0 8px 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.perforation {
+  position: absolute;
+  left: -1px;
+  top: 15px;
+  bottom: 15px;
+  width: 2px;
+  background-image: linear-gradient(to bottom, #D4AF37 50%, rgba(255,255,255,0) 0%);
+  background-position: right;
+  background-size: 2px 12px;
+  background-repeat: repeat-y;
+}
+
+.ticket-stub::before, .ticket-stub::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background-color: #FFFDF9; 
+  border-radius: 50%;
+  left: -13px;
+  z-index: 2;
+}
+.ticket-stub::before { top: -13px; border-bottom: 2px solid #D4AF37; }
+.ticket-stub::after { bottom: -13px; border-top: 2px solid #D4AF37; }
+
+.ticket-header {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: #a3a3a3;
+  margin-bottom: 8px;
+}
+
+.divider {
+  height: 1px;
+  background: #D4AF37;
+  width: 50px;
+  margin: 12px auto;
+}
+
+.guest-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem;
+  color: #E0218A;
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.event-info {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  margin-bottom: 15px;
+  line-height: 1.4;
+  color: #444;
+}
+
+.info-ru {
+  font-size: 0.75rem;
+  color: #888;
+  display: block;
+  margin-top: 4px;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+  text-align: left;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 15px;
+}
+
+.detail-item span {
+  display: block;
+  font-size: 0.55rem;
+  color: #b0b0b0;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.detail-item strong {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  color: #222;
+  display: block;
+}
+
+.pink-text {
+  color: #E0218A !important;
+  font-weight: 600;
+}
+
+/* ЛОКАЦИИ И ПОДСКАЗКИ */
+.location-block {
+  grid-column: span 2;
+  margin-top: 5px;
+}
+
+.location-hint {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #E0218A; /* Акцент на боулинге */
+  margin: 4px 0 10px 0;
+  letter-spacing: 0.3px;
+}
+
+.loc-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.loc-btn {
+  background: white;
+  border: 1px solid #D4AF37;
+  padding: 8px 18px;
+  border-radius: 25px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #333;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.loc-btn:hover, .loc-btn.active {
+  background-color: #E0218A;
+  color: white;
+  border-color: #E0218A;
+}
+
+.loc-details {
+  background: #fdfafb;
+  padding: 12px;
+  border-radius: 12px;
+  margin-top: 6px;
+  border-left: 3px solid #E0218A;
+}
+
+.loc-details p {
+  margin: 0 0 6px 0;
+  color: #555;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+}
+
+.map-link {
+  color: #D4AF37;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+}
+
+/* ШТРИХКОД */
+.barcode-container {
+  transform: rotate(-90deg); 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: -15px; 
+}
+
+.barcode {
+  display: flex;
+  height: 45px;   
+  width: 230px;   
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.barcode-line {
+  background-color: #1a1a1a;
+  width: 1px;
+  height: 100%;
+}
+.barcode-line.medium { width: 2.5px; }
+.barcode-line.wide { width: 4.5px; }
+
+.ticket-number {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.55rem;
+  color: #999;
+  letter-spacing: 3px;
+  margin-top: 10px;
+}
