@@ -1,72 +1,80 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
+import { GUESTS } from '../constants/guests'; // Твой новый файл с geo
 import './InvitePage.css';
 
 const InvitePage = () => {
-  const guestName = localStorage.getItem('guestName') || 'Артемка';
+  const guestName = localStorage.getItem('guestName') || 'Гость';
+  const guestData = GUESTS.find(g => g.displayName === guestName);
+  
+  // Определяем город. Если гостя нет в списке, по умолчанию "Нижний"
+  const city = guestData?.geo || "Нижний";
+
+  // Создаем объект с настройками для каждого города
+  const cityConfigs = {
+    "Нижний": {
+      date: '22.04.2026',
+      time: '16:00 — Bowling!',
+      targetDate: '2026-04-22T16:00:00',
+      hint: 'Начинаем встречу в боулинге (Capital Club)',
+      locations: [
+        { id: 'capital', name: 'Capital Club', address: 'проспект Гагарина, 27', link: 'https://yandex.com/maps/org/capital_club/1037304856' },
+        { id: 'herring', name: 'Селедка и кофе', address: 'ул. Рождественская, 19', link: 'https://yandex.com/maps/org/seledka_i_kofe/31961728574' }
+      ]
+    },
+    "Москва": {
+      date: '25.04.2026', 
+      time: '12:00 — Amusement Park',
+      targetDate: '2026-04-25T12:00:00',
+      hint: 'Начинаем встречу в парке аттракционов "Сказка"',
+      locations: [
+        { id: 'park', name: 'Парк Сказка', address: 'Москва, Западный административный округ, район Крылатское', link: 'https://yandex.ru/maps/org/skazka/12547368043?si=bzf6h44x82knjp8nqqbbdd6yf0' },
+        { id: 'rest', name: 'Прекрасное и сытное завершение вечера', address: 'Секретно', link: 'https://i.pinimg.com/1200x/b8/c6/ca/b8c6cac56ff70087ea429ad32f72aa65.jpg' }
+      ]
+    }
+  };
+
+  // Выбираем конфиг текущего гостя
+  const currentConfig = cityConfigs[city];
+
   const [activeLoc, setActiveLoc] = useState(null);
   const wishlistLink = "https://t.me/wishlistbestbot?start=2131755328";
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0});
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  // Таймер теперь зависит от targetDate конкретного города
   useEffect(() => {
-  const targetDate = new Date('2026-04-22T16:00:00'); // Твой день рождения
+    const targetDate = new Date(currentConfig.targetDate);
 
-  const timer = setInterval(() => {
-    const now = new Date();
-    const difference = targetDate - now;
+    const timer = setInterval(() => {
+      const now = new Date();
+      const difference = targetDate - now;
 
-    if (difference > 0) {
-      setTimeLeft({
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60)
-      });
-    } else {
-      clearInterval(timer);
-    }
-  }, 1000);
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60)
+        });
+      } else {
+        clearInterval(timer);
+      }
+    }, 1000);
 
-  return () => clearInterval(timer);
-}, []);
+    return () => clearInterval(timer);
+  }, [currentConfig.targetDate]); // Перезапускаем таймер, если сменился город
 
   useEffect(() => {
     const duration = 4 * 1000;
     const end = Date.now() + duration;
-
     const frame = () => {
-      confetti({
-        particleCount: 2,
-        angle: 60, spread: 55,
-        origin: { x: 0, y: 0.6 },
-        colors: ['#E0218A', '#D4AF37', '#FFC0CB']
-      });
-      confetti({
-        particleCount: 2,
-        angle: 120, spread: 55,
-        origin: { x: 1, y: 0.6 },
-        colors: ['#E0218A', '#D4AF37', '#FFC0CB']
-      });
-
+      confetti({ particleCount: 2, angle: 60, spread: 55, origin: { x: 0, y: 0.6 }, colors: ['#E0218A', '#D4AF37', '#FFC0CB'] });
+      confetti({ particleCount: 2, angle: 120, spread: 55, origin: { x: 1, y: 0.6 }, colors: ['#E0218A', '#D4AF37', '#FFC0CB'] });
       if (Date.now() < end) requestAnimationFrame(frame);
     };
     frame();
   }, []);
-
-  const locations = [
-    {
-      id: 'capital',
-      name: 'Capital Club',
-      address: 'проспект Гагарина, 27',
-      link: 'https://yandex.com/maps/org/capital_club/1037304856' 
-    },
-    {
-      id: 'herring',
-      name: 'Селедка и кофе',
-      address: 'ул. Рождественская, 19',
-      link: 'https://yandex.com/maps/org/seledka_i_kofe/31961728574'
-    }
-  ];
 
   return (
     <div className="invite-container">
@@ -77,7 +85,6 @@ const InvitePage = () => {
         className="ticket-cinema"
       >
         <div className="ticket-body">
-          {/* Левая часть */}
           <div className="ticket-main-info">
             <h2 className="ticket-header">ADMIT ONE  //  ВХОД ПО ПРИГЛАШЕНИЮ</h2>
             <div className="divider"></div>
@@ -92,19 +99,19 @@ const InvitePage = () => {
             <div className="details-grid">
               <div className="detail-item">
                 <span>DATE / ДАТА</span>
-                <strong>22.04.2026</strong>
+                <strong>{currentConfig.date}</strong>
               </div>
               <div className="detail-item">
                 <span>TIME / ВРЕМЯ</span>
-                <strong>16:00 — Bowling!</strong>
+                <strong>{currentConfig.time}</strong>
               </div>
               
               <div className="detail-item location-block">
                 <span>LOCATION / ЛОКАЦИИ</span>
-                <p className="location-hint">Начинаем встречу в боулинге (Capital Club)</p>
+                <p className="location-hint">{currentConfig.hint}</p>
                 
                 <div className="loc-icons">
-                  {locations.map((loc) => (
+                  {currentConfig.locations.map((loc) => (
                     <div key={loc.id} className="loc-wrapper">
                       <motion.button 
                         whileTap={{ scale: 0.95 }}
@@ -139,21 +146,20 @@ const InvitePage = () => {
                 <strong className="pink-text">Old Money</strong>
               </div>
             </div>
-          <div className="wishlist-wrapper">
-            <motion.a 
-              href={wishlistLink}
-              target="_blank" 
-              rel="noreferrer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="wishlist-link-btn"
-            >
-              🎁 WISHLIST / МОЙ ВИШЛИСТ
-            </motion.a>
-          </div>
+            <div className="wishlist-wrapper">
+              <motion.a 
+                href={wishlistLink}
+                target="_blank" 
+                rel="noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="wishlist-link-btn"
+              >
+                🎁 WISHLIST / МОЙ ВИШЛИСТ
+              </motion.a>
+            </div>
           </div>
 
-          {/* Правая часть (Корешок) */}
           <div className="ticket-stub">
             <div className="perforation"></div>
             <div className="barcode-container">
@@ -167,6 +173,7 @@ const InvitePage = () => {
           </div>
         </div>
       </motion.div>
+
       <div className="page-bottom-timer">
         <p className="timer-label">До начала праздника осталось:</p>
         <div className="countdown-container">
