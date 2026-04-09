@@ -3,28 +3,28 @@ export const GUESTS = [
     id: 1,
     searchName: "артем", // Пишем маленькими для легкого поиска
     displayName: "Артемка",
-    geo: "Нижний Новгород",
+    geo: "Нижний",
     aliases: ["артем", "артемий", "artemiy", "artem"]
   },
   {
     id: 2,
     searchName: "даша",
     displayName: "Дашенька",
-    geo: "Нижний Новгород",
+    geo: "Нижний",
     aliases: ["даша", "дарья", "dasha"]
   },
   {
     id: 3,
     searchName: "оля",
     displayName: "Олечка",
-    geo: "Нижний Новгород",
+    geo: "Нижний",
     aliases: ["оля", "ольга", "olya"]
   },
   {
     id: 4,
     searchName: "вова",
     displayName: "Вова",
-    geo: "Нижний Новгород",
+    geo: "Нижний",
     aliases: ["вова", "владимир", "vladimir"]
   },
   {
